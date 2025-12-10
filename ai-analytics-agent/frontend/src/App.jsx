@@ -98,6 +98,24 @@ function App() {
 
                 <FileUpload onFileSelected={handleFileSelected} isLoading={isLoading} />
 
+                <button
+                    onClick={async () => {
+                        try {
+                            const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
+                            alert(`Testing connection to: ${API_BASE}`);
+                            const res = await fetch(`${API_BASE}/`);
+                            const text = await res.json();
+                            alert(`Success! Backend says: ${JSON.stringify(text)}`);
+                        } catch (e) {
+                            alert(`Connection failed: ${e.message}`);
+                            console.error("Test connection failed:", e);
+                        }
+                    }}
+                    style={{ marginTop: '1rem', padding: '0.5rem', width: '100%', cursor: 'pointer' }}
+                >
+                    Test Backend Connection
+                </button>
+
                 <div style={{ height: '1px', background: 'var(--border-color)', margin: '1rem 0' }}></div>
 
                 <InsightsPanel summary={datasetSummary} insights={insights} />
