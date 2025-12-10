@@ -41,8 +41,16 @@ function App() {
             console.log("DEBUG: Set sample questions:", (data.sample_questions && data.sample_questions.length > 0) ? data.sample_questions : fallbackQuestions); // Debug log
             setMessages([{ role: "assistant", content: "Dataset uploaded! You can now ask questions about it." }]);
         } catch (error) {
-            console.error("Upload failed", error);
-            alert("Upload failed");
+            console.error("Upload failed details:", error);
+            if (error.response) {
+                console.error("Response data:", error.response.data);
+                console.error("Response status:", error.response.status);
+            } else if (error.request) {
+                console.error("No response received:", error.request);
+            } else {
+                console.error("Error setting up request:", error.message);
+            }
+            alert("Upload failed. Check console for details.");
         } finally {
             setIsLoading(false);
         }
