@@ -1,6 +1,9 @@
 import axios from "axios";
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
+let API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
+if (API_BASE.endsWith('/')) {
+  API_BASE = API_BASE.slice(0, -1);
+}
 console.log("DEBUG: Using API_BASE:", API_BASE);
 
 export async function uploadDataset(file) {
